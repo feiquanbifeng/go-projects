@@ -50,7 +50,7 @@ func (q *Quiet) Save(fn func()) error {
     if err != nil {
         return err
     }
-    err = ioutil.WriteFile(q.filename, byt, os.FileMode(0655))
+    err = ioutil.WriteFile(q.filename, byt, 0655)
     if err != nil {
         return err
     }
