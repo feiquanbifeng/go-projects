@@ -112,6 +112,32 @@ func (c *Command) Usage(str string) {
 
 }
 
+// Return program help document.
+func (c *Command) HelpInformation() string {
+    msg := []string {
+        "",
+        " Usage: " + c.name,
+        c.commandHelp(),
+        " Options:",
+        "",
+        c.optionHelp(),
+        "",
+        ""
+    }
+    return strings.Join(msg, "\n")
+}
+
+// Output help information for this command
+func (c *Command) OutputHelp() {
+    fmt.Fprintf(os.Stdout, c.HelpInfomation())
+}
+
+// Output help information and exit.
+func (c *Command) Help() {
+    c.OutputHelp()
+    os.Exit(0)
+}
+
 // Pad `str` to `witdh`.
 func Pad(str string, width int) string {
     count := math.Max(0, float64(width-len(str)))
