@@ -3,6 +3,7 @@ package main
 import (
     "flag"
     "fmt"
+    "math"
     "os"
     "strings"
 )
@@ -109,6 +110,22 @@ func (c *Command) Alias(args ...string) string {
 // Set / Get the command usage `str`
 func (c *Command) Usage(str string) {
 
+}
+
+// Pad `str` to `witdh`.
+func Pad(str string, width int) string {
+    count := math.Max(0, float64(width-len(str)))
+    return str + strings.Repeat(" ", int(count)+1)
+}
+
+// Output help information if necessary
+func OutputHelpIfNecessary(cmd Commander, options []Option) {
+    for _, v := range options {
+        if v == "--help" || v == "-h" {
+            cmd.outputHelp()
+            os.Exit(0)
+        }
+    }
 }
 
 func main() {
