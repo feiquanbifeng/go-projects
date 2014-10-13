@@ -10,12 +10,13 @@ import (
     "time"
 )
 
-var (
-    pool          *redis.Pool
+const (
     redisServer   = "pub-redis-10230.us-east-1-4.2.ec2.garantiadata.com:10230"
     redisPassword = "realtime"
     prefix        = "db_"
 )
+
+var pool *redis.Pool
 
 func init() {
     pool = newPool(redisServer, redisPassword)
