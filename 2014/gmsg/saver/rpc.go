@@ -10,7 +10,7 @@ import (
     "net/rpc"
 )
 
-var port = ":1234"
+const port = ":1234"
 
 func init() {
     server := new(Server)
