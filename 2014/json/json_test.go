@@ -20,9 +20,8 @@ func TestLoad(t *testing.T) {
     q.Load(func() {
         fmt.Println("load success!")
     })
-    if apple, ok := q.Data["apple"]; ok {
-        fmt.Println(apple)
-    }
+    apple := q.Get("apple")
+    fmt.Println(apple)
 }
 
 func TestSave(t *testing.T) {
@@ -30,8 +29,8 @@ func TestSave(t *testing.T) {
     if err != nil {
         t.Errorf("Error new Quiet")
     }
-    q.Data["home"] = "home"
-    q.Data["flag"] = false
+    q.Set("home", "home")
+    q.Set("flag", false)
     q.Save(func() {
         fmt.Println("save success!")
     })
