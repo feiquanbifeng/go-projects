@@ -1,4 +1,4 @@
-// read json data from json file
+// Read json data from json file
 // write json data to file
 
 package json
@@ -10,32 +10,59 @@ import (
     "path/filepath"
 )
 
-// define a Quiet struct
-type Quiet struct {
-    filename string
-    Data     map[string]interface{}
+// Define a Quieter interface
+type Quieter interface {
+    Get(k string) interface{}
+    Set(k string, v interface{})
+    Len() int
+    Load(fn func()) error
+    Save(fn func()) error
 }
 
-// instance of Quiet
-func NewQuiet(filename string) (*Quiet, error) {
+// Define a quiet struct
+type quiet struct {
+    filename string
+    data     map[string]interface{}
+}
+
+// Instance of quiet
+func NewQuiet(filename string) (Quieter, error) {
     wd, err := os.Getwd()
     if err != nil {
         return nil, err
     }
     abs := filepath.Join(wd, filename)
-    return &Quiet{
+    return &quiet{
         filename: abs,
-        Data:     make(map[string]interface{}),
+        data:     make(map[string]interface{}),
     }, nil
 }
 
-// load data
-func (q *Quiet) Load(fn func()) error {
+// Get value by key
+func (q *quiet) Get(k string) interface{} {
+    return q.data[k]
+}
+
+// Set key value pair
+func (q *quiet) Set(k string, v interface{}) {
+    if q.data == nil {
+        q.data = make(map[string]interface{})
+    }
+    q.data[k] = v
+}
+
+// Return data length
+func (q *quiet) Len() int {
+    return len(q.data)
+}
+
+// Load data
+func (q *quiet) Load(fn func()) error {
     byt, err := ioutil.ReadFile(q.filename)
     if err != nil {
         return err
     }
-    if err := json.Unmarshal(byt, &q.Data); err != nil {
+    if err := json.Unmarshal(byt, &q.data); err != nil {
         return err
     }
     if fn != nil {
@@ -44,9 +71,9 @@ func (q *Quiet) Load(fn func()) error {
     return nil
 }
 
-// save data
-func (q *Quiet) Save(fn func()) error {
-    byt, err := json.Marshal(q.Data)
+// Save data
+func (q *quiet) Save(fn func()) error {
+    byt, err := json.Marshal(q.data)
     if err != nil {
         return err
     }
