@@ -13,6 +13,16 @@ func TestLength(t *testing.T) {
     }
 }
 
+func TestReduce(t *testing.T) {
+    var fn = func(a, b interface{}, args ...interface{}) interface{} {
+        return a.(int) + b.(int)
+    }
+    result := arr.Reduce(fn)
+    if result != 36 {
+        t.Errorf("Reduce method error")
+    }
+}
+
 func TestShift(t *testing.T) {
     first := arr.Shift()
     if first != 12 {
