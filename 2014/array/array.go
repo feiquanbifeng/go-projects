@@ -102,11 +102,10 @@ func (a *Array) Reduce(fn func(prev, curr interface{}, args ...interface{}) inte
     }
     var (
         r interface{}
-        i int
+        i = 0
     )
     if len(init) != 0 {
         r = init[0]
-        i = 0
     } else {
         r = (*a)[0]
         i = 1
