@@ -104,7 +104,7 @@ func (a *Array) Reduce(fn func(prev, curr interface{}, args ...interface{}) inte
         r interface{}
         i = 0
     )
-    if len(init) != 0 && !a.IsArray((*a)[0]) {
+    if len(init) != 0 {
         r = init[0]
     } else {
         r = (*a)[0]
