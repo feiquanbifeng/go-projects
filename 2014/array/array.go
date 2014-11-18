@@ -94,6 +94,24 @@ func (a *Array) Map(fn func(element interface{}, args ...interface{}) interface{
     return tmp
 }
 
+// Reduce method applies a function against an accumulator and each value of the array
+// has to reduce it to a single value
+func (a *Array) Reduce(fn func(prev, curr interface{}, args ...interface{}) interface{}, init ...interface{}) interface{} {
+    if a.Length() == 0 {
+        return nil
+    }
+    var r interface{}
+    if len(init) != 0 {
+        r = init[0]
+    } else {
+        r = (*a)[0]
+    }
+    for i := 1; i < a.Length(); i++ {
+        r = fn(r, (*a)[i])
+    }
+    return r
+}
+
 // Private method translate all element to string.
 func convertString(arr *Array) []string {
     str := make([]string, 0, arr.Length())
