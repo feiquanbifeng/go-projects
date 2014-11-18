@@ -100,13 +100,18 @@ func (a *Array) Reduce(fn func(prev, curr interface{}, args ...interface{}) inte
     if a.Length() == 0 {
         return nil
     }
-    var r interface{}
+    var (
+        r interface{}
+        i int
+    )
     if len(init) != 0 {
         r = init[0]
+        i = 0
     } else {
         r = (*a)[0]
+        i = 1
     }
-    for i := 1; i < a.Length(); i++ {
+    for ; i < a.Length(); i++ {
         r = fn(r, (*a)[i])
     }
     return r
