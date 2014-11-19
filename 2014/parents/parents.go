@@ -6,7 +6,6 @@ package parents
 import (
     "os"
     "runtime"
-    "fmt"
     "path"
     "strings"
     "regexp"
