@@ -28,6 +28,7 @@ func Parents(args ...string) []string {
     } else if n == 1 {
         cwd = args[0]
     } else {
+        cwd = args[0]
         isWindows = strings.HasPrefix(args[1], "win")
     }
 
@@ -81,9 +82,10 @@ func Parents(args ...string) []string {
     arrSlice := arrReduce.(array.Array)
     arrReverse := arrSlice.Slice(1, 0)
     arrReverse.Reverse()
-
-    if arrReverse[0] == arrReverse[1] {
-        return []string{arrReverse[0].(string)}
+    if len(arrReverse) >= 2 {
+        if arrReverse[0] == arrReverse[1] {
+            return []string{arrReverse[0].(string)}
+        }
     }
 
     if isWindows && strings.HasPrefix(cwd, "\\") {
