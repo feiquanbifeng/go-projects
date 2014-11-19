@@ -118,8 +118,13 @@ func (a *Array) Reduce(fn func(prev, curr interface{}, args ...interface{}) inte
 
 // Private method translate all element to string.
 func convertString(arr *Array) []string {
-    str := make([]string, 0, arr.Length())
-    for _, v := range *arr {
+    return interfaceToString(arr)
+}
+
+// Private method translate all element to string. 
+func interfaceToString(a *Array) []string {
+    str := make([]string, 0, a.Length())
+    for _, v := range *a {
         switch v.(type) {
         case byte:
             str = append(str, string(v.(byte)))
@@ -136,6 +141,11 @@ func convertString(arr *Array) []string {
         }
     }
     return str
+}
+
+// Convert to string
+func (a *Array) ToString() []string {
+    return interfaceToString(a)
 }
 
 // Joins all elements of an array into a string.
