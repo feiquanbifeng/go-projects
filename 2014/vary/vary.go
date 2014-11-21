@@ -61,7 +61,7 @@ func Append(header string, argv ...string) string {
 
 // Parse string throw `,`
 func parse(header string) []string {
-    reg := regexp.MustCompile(`/ *, */`)
+    reg := regexp.MustCompile(`\s*,\s*`)
     return reg.Split(strings.TrimSpace(header), -1)
 }
 
