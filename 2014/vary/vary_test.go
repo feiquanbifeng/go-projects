@@ -2,7 +2,6 @@ package vary
 
 import (
     "net/http"
-    // "io/ioutil"
     "fmt"
     "testing"
 )
@@ -20,4 +19,13 @@ func TestVary(t *testing.T) {
 
     //body, _ := ioutil.ReadAll(resp.Body)
     fmt.Println(resp.Header["Vary"])
+}
+
+func TestAppend(t *testing.T) {
+    a := Append("", "Origin", "User-Agent", "*", "Accept")
+    if a == "*" {
+        fmt.Println("ok")
+    } else {
+        fmt.Println("error")
+    }
 }
