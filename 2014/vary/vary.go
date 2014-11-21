@@ -13,7 +13,7 @@ import (
 // the second parameter is an array
 func Append(header string, argv ...string) string {
     var (
-        greg = regexp.MustCompile(`/[\(\)<>@,;:\\"\/\[\]\?=\{\}\x20\x09]/`)
+        greg = regexp.MustCompile(`[\(\)<>@,;:\\"\/\[\]\?=\{\}\s\t]`)
         fields []string
     )
     if len(argv) == 1 {
@@ -69,5 +69,5 @@ func parse(header string) []string {
 func Vary(res *http.Response, argv ...string) {
     head := res.Header[http.CanonicalHeaderKey("Vary")]
     header := strings.Join(head, ",")
-    res.Header.Add("Vary", Append(header, argv...))
+    res.Header.Set("Vary", Append(header, argv...))
 }
