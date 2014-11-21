@@ -35,7 +35,6 @@ func Append(header string, argv ...string) string {
     }
     // enumerate current values
     vals := parse(strings.ToLower(header))
-    header = strings.Join(vals, ", ")
     
     for _, v := range fields {
         field := strings.ToLower(v)
