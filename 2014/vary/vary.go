@@ -25,6 +25,9 @@ func Append(header string, argv ...string) string {
         if greg.MatchString(v) {
             panic("field argument contains an invalid header")
         }
+        if v == "*" {
+            return "*"
+        }
     }
     // existing, unspecified vary
     if header == "*" {
@@ -32,11 +35,9 @@ func Append(header string, argv ...string) string {
     }
     // enumerate current values
     vals := parse(strings.ToLower(header))
-
+    header = strings.Join(vals, ", ")
+    
     for _, v := range fields {
-        if v == "*" {
-            return "*"
-        }
         field := strings.ToLower(v)
         var flag bool
         for _, k := range vals {
